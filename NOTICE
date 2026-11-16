@@ -24,3 +24,12 @@ and renderer for the default synchronous GFM options, removes extension API
 handling, caches bullet regexps, gates tokenizers by their possible initial
 characters, and reduces unnecessary masking scans and Unicode allocations.
 parse.js and main.ts are the entry's own default-only driver.
+
+Direct scanner rewrite (2026-11-16): grammar.js contains the marked 18.1.3
+compatibility grammar, helpers, and adapted leaf recognizers, without the marked
+Lexer/Parser pipeline. containers.js adapts marked's list indentation and quote
+continuation rules to directly rendered HTML. parse.js implements index-based
+HTML emission and deferred reference resolution. The extraction scripts and
+profiling variants under validation/ are development-only; variants containing
+adapted grammar calls share this notice. The original marked licence and
+copyright notices are retained in LICENSE and the generated grammar header.

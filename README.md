@@ -1,11 +1,30 @@
 # markdown-render-speed-02
 
-[![make.fun](https://make.fun/badge/markdown-render-speed-02.svg)](https://make.fun/bounty/markdown-render-speed-02)
-[![rank](https://make.fun/badge/markdown-render-speed-02/yx9mio/markdown-render-speed-02/rank.svg)](https://make.fun/bounty/markdown-render-speed-02)
-[![reward](https://make.fun/badge/markdown-render-speed-02/yx9mio/markdown-render-speed-02/reward.svg)](https://make.fun/bounty/markdown-render-speed-02)
+Dependency-free synchronous GFM renderer targeting the default output of marked
+18.1.3. `parse.js` exports `parse(markdown)`. `main.ts` reads the kit's ordered
+`{id, markdown}[]` from `/input/cases.json` and writes the corresponding HTML
+string array to `/output/html.json`.
 
-A fast drop-in replacement for `marked.parse` (marked 18.1.3, default options), built for the [make.fun markdown-render-speed-02](https://make.fun/bounty/markdown-render-speed-02) competition.
+The runtime consists of `main.ts`, `parse.js`, `grammar.js`, `containers.js`, and
+`package.json`. It uses Node built-ins only. `marked-core.js` is the previous
+entry and is **not imported by the new renderer**. The vendored reference under
+`baselines/` is used only by development tools.
 
-`parse.js` exports `parse(markdown)`, which returns exactly the HTML that marked 18.1.3 renders with its default options (GFM on, breaks off, pedantic off). `main.ts` reads `/input/cases.json`, renders each case with `parse`, and writes `/output/html.json`.
+The renderer scans blocks and inline content by index and emits HTML directly.
+It does not construct a token tree or invoke marked's Lexer or Parser. The leaf
+recognizers and container indentation rules are adapted from marked's MIT
+licensed grammar; their transient matches are consumed immediately. See
+[DESIGN.md](DESIGN.md) for reference resolution and list/quote handling.
 
-The parser is an optimized fork of marked (`marked-core.js`, MIT, see LICENSE and NOTICE). All 720 practice cases match marked exactly, and it runs about 1.20x faster than the marked baseline on a single CPU.
+Validation (requires the supplied practice fixtures and development oracle):
+
+```sh
+node validation/check.mjs
+node validation/fuzz.mjs
+node validation/structured-fuzz.mjs
+sh validation/bench.sh
+```
+
+The final measurements and exact limitations are recorded in
+[validation/REPORT.md](validation/REPORT.md). The official container/cgroup speed
+threshold has not been verified. Nothing has been committed or submitted.

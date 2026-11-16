@@ -1,0 +1,54 @@
+{
+  "runtime": "v24.22.1",
+  "method": "Local process.cpuUsage at beforeExit, fresh processes, actual main.ts with filesystem mount substitution. Not official cgroup/container measurement.",
+  "runs": [
+    {
+      "run": 1,
+      "actual": {
+        "user_us": 1181787,
+        "system_us": 123391,
+        "total_us": 1305178
+      },
+      "empty": {
+        "user_us": 69464,
+        "system_us": 25362,
+        "total_us": 94826
+      },
+      "adjusted_cpu_us": 1210352,
+      "passed": 720
+    },
+    {
+      "run": 2,
+      "actual": {
+        "user_us": 1188828,
+        "system_us": 121827,
+        "total_us": 1310655
+      },
+      "empty": {
+        "user_us": 82104,
+        "system_us": 19867,
+        "total_us": 101971
+      },
+      "adjusted_cpu_us": 1208684,
+      "passed": 720
+    },
+    {
+      "run": 3,
+      "actual": {
+        "user_us": 1225411,
+        "system_us": 121607,
+        "total_us": 1347018
+      },
+      "empty": {
+        "user_us": 67170,
+        "system_us": 20771,
+        "total_us": 87941
+      },
+      "adjusted_cpu_us": 1259077,
+      "passed": 720
+    }
+  ],
+  "median_raw_cpu_us": 1310655,
+  "median_adjusted_cpu_us": 1210352,
+  "output_sha256": "e7e89c4fba2c45b1c4aa96c46c987e46c75a9fcdd08916b58ae7f2a7d7851724"
+}
